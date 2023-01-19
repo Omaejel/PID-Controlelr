@@ -97,10 +97,23 @@ void displayUpdate()
   lcd.setCursor(14,0);
   int temp = tempset; //turns to an int with no decimal
   lcd.print(temp);
-  lcd.setCursor(0,1);
-  lcd.print("  Actual:  ");
-  lcd.setCursor(11,1);  
-  lcd.print(actualtemp);
-  lcd.setCursor(17,1);  
-  lcd.print("F");
+
+  if (actualtemp < 100)
+  {
+    lcd.setCursor(0,1);
+    lcd.print("  Actual:   ");
+    lcd.setCursor(12,1);  
+    lcd.print(actualtemp);
+    lcd.print("F");  
+  }
+
+  else
+  {
+    lcd.setCursor(0,1);
+    lcd.print("  Actual:  ");
+    lcd.setCursor(11,1);  
+    lcd.print(actualtemp);
+    lcd.print("F");  
+  }
+
 }
