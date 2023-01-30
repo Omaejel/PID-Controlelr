@@ -2,14 +2,14 @@
 #include <LiquidCrystal_I2C.h>
 #include <PID_v2.h>
 
-#define THERMISTORPIN A10// which analog pin to connect - why do you declare it here as a define? Does it need to be defined in the setup loop?
+#define THERMISTORPIN A1// which analog pin to connect - why do you declare it here as a define? Does it need to be defined in the setup loop?
 #define RESISTORREF 9975 // refference resistor actual value
 #define THERMISTORNOMINAL 100000 //nominal thermistor value @ 25C
 #define TEMPERATURENOMINAL 25  //nominal thermistor temp
 #define BCOEFFICIENT 3950 //given by thermistor manufacturer
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);  // I2C LCD address to 0x27 for a 20chars  4line disp
-const int ssrpin = 5;
+const int ssrpin = 6;
 
 //***************** PID SETTINGS *******************
 //When process tuning, start with i=0, d=0, then adjust P>0 to get quick response
@@ -27,7 +27,7 @@ double tempset = 150;
 
 //****************** EVENT TIMING *******************
 //Time= millisecs between events, Millis= the last time event occured
-long tempSampleTime = 20, tempSampleMillis = 0; // temperature check
+long temperatureSampleTime = 5, temperatureSampleMillis = 0; // temperature check
 long displayUpdateTime = 500, displayUpdateMillis = 0; // draw display
 
 void setup() 
@@ -47,9 +47,9 @@ void setup()
 
 void loop() {
   unsigned long currentMillis = millis(); 
-  if(currentMillis - tempSampleMillis >= tempSampleTime) // temperature sampling timer
+  if(currentMillis - temperatureSampleMillis >= temperatureSampleTime) // temperature sampling timer
   {
-    tempSampleMillis = currentMillis; // save last time temp was sampled
+    temperatureSampleMillis = currentMillis; // save last time temp was sampled
     actualtemp = checkTemperature();
   }
 
